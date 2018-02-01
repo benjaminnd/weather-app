@@ -1,0 +1,36 @@
+/* $clr-header: #2980b9;
+
+$background: url(https://bit.ly/1V2DIum);
+$container-background: rgba(66,66,66,0.4); */
+
+
+#header {
+  background-color: #2980b9;
+  color: white;
+  padding: 0;
+  display: inline-block;
+  width: 100%;
+  margin-top: 0;
+  box-shadow: 0px 2px 5px #555;
+  }
+  .left, .navbar, .right {
+    display: inline-block;
+  }
+  .left, .right {
+    width: 30%;
+  }
+  .navbar {
+    width: 40%;
+  }
+  .left {
+    float: left;
+  }
+  .right {
+    text-align: center;
+    float: right;
+    vertical-align: bottom;
+    line-height: 80px;
+  }
+  .container{
+    margin-top: auto;
+  }
