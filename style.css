@@ -34,3 +34,17 @@ $container-background: rgba(66,66,66,0.4); */
   .container{
     margin-top: auto;
   }
+  .btn-default {
+    display: inline-block;
+    min-height: 50px;
+
+  }
+  .nonclick {
+    border:none;
+    background-color: #eee;
+
+  }
+  #map{
+    height: 400px;
+    width: 100%;
+  }

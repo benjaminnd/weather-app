@@ -1,5 +1,5 @@
-var lat = "lat=";
-var lng = "lon=";
+var latitude = "lat=";
+var longitude = "lon=";
 var city;
 var weatherType;
 var tempC;
@@ -10,6 +10,8 @@ var api = "https://fcc-weather-api.glitch.me/api/current?"
 
 $(document).ready(function(){
   currentPositionWeather();
+  initMap();
+  console.log(map);
   $("#temp").click(function(){
     var unit = $("#unit").text();
     var currentTemp = $("#temp").text();
@@ -25,8 +27,6 @@ $(document).ready(function(){
       $("#unit").html(newUnit);
     }
 
-
-
   })
 })
   // api = 'https://fcc-weather-api.glitch.me/api/current?lat=35&lon=139' ;
@@ -37,9 +37,13 @@ function currentPositionWeather(){
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(function(position){
       // console.log(position.coords.latitude + " " + position.coords.longitude);
-      lat += position.coords.latitude;
-      lng += position.coords.longitude;
-      api += lat + '&' + lng;
+      latitude += position.coords.latitude;
+      longitude += position.coords.longitude;
+      api += latitude + '&' + longitude;
+      console.log(api);
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      console.log(longitude);
       console.log(api);
       jQuery.getJSON(api, function(data){
         // alert(data.coord.lat);
@@ -59,4 +63,11 @@ function currentPositionWeather(){
   }else{
     alert('Geolocation is not supported');
   }
+}
+function initMap() {
+  var map = new GMaps({
+    el: '#map',
+    lat: 43.2557,
+    lng: -79.8711
+  })
 }
