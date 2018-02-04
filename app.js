@@ -1,5 +1,5 @@
-var latitude = "lat=";
-var longitude = "lon=";
+var latitude;
+var longitude;
 var city;
 var weatherType;
 var tempC;
@@ -9,40 +9,31 @@ var tempF;
 var api = "https://fcc-weather-api.glitch.me/api/current?"
 
 $(document).ready(function(){
-  currentPositionWeather();
-  console.log(map);
+  currentPositionWeather();  //call currentPositionWeather to show weather in current location
+  //Convert temperature from Celcius to Fahrenheit and vice versa when users click on the button
   $("#temp").click(function(){
-    var unit = $("#unit").text();
-    var currentTemp = $("#temp").text();
-    console.log(currentTemp);
-    var newUnit;
-    if(unit.charCodeAt(0) == 8451){ //if current temp is in C
-      newUnit = "&#8457";
-      $("#temp").html(tempF.toFixed(2));
-      $("#unit").html(newUnit);
-    }else{ //if current temp is in F
-      newUnit = "&#8451";
-      $("#temp").html(tempC);
-      $("#unit").html(newUnit);
-    }
+    var unit = $("#unit").text(); //get temporary unit
+    var currentTemp = $("#temp").text(); //get current temperature
+    //If current unit is Celcius change new unit to F and vice versa
+    var newUnit = (unit.charCodeAt(0)== 8451)? "&#8457" : "&#8451";
+    console.log(newUnit);
+    $("#unit").html(newUnit);
+    //show temperature accordingly
+    unit = $("#unit").text();
+    $("#temp").html((unit.charCodeAt(0)== 8451)? tempC : tempF.toFixed(2));
 
   })
 })
-  // api = 'https://fcc-weather-api.glitch.me/api/current?lat=35&lon=139' ;
-  // jQuery.getJSON(api, function(data){
-  //   alert(data.coord.lon);
-  // });
+//This function uses geolocation to get user's current location's coordinates and sends request to weather API
 function currentPositionWeather(){
-  if(navigator.geolocation){
+  if(navigator.geolocation){ //if browser supports geolocation
     navigator.geolocation.getCurrentPosition(function(position){
-      // console.log(position.coords.latitude + " " + position.coords.longitude);
-      latitude += position.coords.latitude;
-      longitude += position.coords.longitude;
-      api += latitude + '&' + longitude;
-      console.log(api);
+      //get current location's coordinates
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
-      console.log(api);
+      //assign to api variable
+      api += 'lat=' + latitude + '&' + 'lon=' + longitude;
+      //get JSON object from API
       jQuery.getJSON(api, function(data){
         // alert(data.coord.lat);
         city = data.name + ", " + data.sys.country;
@@ -56,9 +47,9 @@ function currentPositionWeather(){
         $("#temp").html(tempC);
         $("#windSpeed").html(windSpeed);
         $("#icon").html(icon);
-        initMap(latitude, longitude);
       });
-      initMap(latitude, longitude); //Generate map using current location as center
+      //generate map
+      initMap(latitude, longitude);
     });
   }else{
     alert('Geolocation is not supported');
@@ -67,7 +58,6 @@ function currentPositionWeather(){
 function initMap(lat, long) {
   var map = new GMaps({
     el: '#map',
-    zoom: 2,
     lat: lat,
     lng: long
   })
