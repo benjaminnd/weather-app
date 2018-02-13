@@ -74,4 +74,4 @@ $(document).ready(function(){
       $("#icon").html(icon);
     });
   }
-})
+});
