@@ -15,9 +15,10 @@ $(document).ready(function(){
     var autocomplete = new google.maps.places.Autocomplete(this,  {types: ['(cities)']});
     google.maps.event.addListener(autocomplete, 'place_changed', function(){
      var place = autocomplete.getPlace();
+     console.log(JSON.stringify(place));
      var lat = place.geometry.location.lat();
      var lng = place.geometry.location.lng();
-     showMap(lat, lng);
+     showMap(lat, lng, place.formatted_address);
      getWeather(lat, lng);
     });
   });
@@ -38,23 +39,35 @@ $(document).ready(function(){
     if(navigator.geolocation){ //if browser supports geolocation
       navigator.geolocation.getCurrentPosition(function(position){
         //get current location's coordinates
+        console.log(position);
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
         //get weather info using current coordinates
         getWeather(latitude, longitude);
-        showMap(latitude, longitude);
+        showMap(latitude, longitude, 'Current Position');
       });
     }else{
       alert('Geolocation is not supported');
+
     }
   };
-  function showMap(lat, long) {
+  function showMap(lat, long, name) {
+    //initiate map
     var map = new GMaps({
       el: '#map',
-      zoom: 7,
+      zoom: 5,
       lat: lat,
       lng: long
     })
+    //create marker on the coordinates
+    map.addMarker({
+      lat: lat,
+      lng: long,
+      infoWindow:{
+        content: '<h3>'+ name + '</h3>',
+        maxWidth: 300
+      }
+    });
   };
   function getWeather(lat, lng){
     //assign to api variable
