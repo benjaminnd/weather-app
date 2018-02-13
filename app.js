@@ -96,6 +96,7 @@ $(document).ready(function(){
     //get JSON object from API
     jQuery.getJSON(completedAPI, function(data){
       // alert(data.coord.lat);
+      console.log(data);
       city = data.name + ", " + data.sys.country;
       weatherType = data.weather[0].description;
       tempC = data.main.temp;
