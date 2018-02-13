@@ -6,7 +6,8 @@ var tempC;
 var windSpeed;
 var icon;
 var tempF;
-var api = "https://fcc-weather-api.glitch.me/api/current?"
+var api = "https://fcc-weather-api.glitch.me/api/current?";
+var mainMap;
 
 $(document).ready(function(){
   currentPositionWeather();  //call currentPositionWeather to show weather in current location
@@ -22,6 +23,8 @@ $(document).ready(function(){
      getWeather(lat, lng);
     });
   });
+
+  //Click event handler for temperature button to convert celcius to fahrenheit and vice versa
   $("#temp").click(function(){
     var unit = $("#unit").text(); //get temporary unit
     var currentTemp = $("#temp").text(); //get current temperature
@@ -44,21 +47,38 @@ $(document).ready(function(){
         longitude = position.coords.longitude;
         //get weather info using current coordinates
         getWeather(latitude, longitude);
-        showMap(latitude, longitude, 'Current Position');
-      });
-    }else{
-      alert('Geolocation is not supported');
-
+        showMap(latitude, longitude, city);
+      }, error, {maximumAge:60000, timeout:500, enableHighAccuracy:true});
     }
   };
+
+  //error handling function that shows default maps
+  function error(){
+    showMap(43.2326349, -79.8813217, 'Hamilton, ON, Canada');
+    getWeather(43.2326349, -79.8813217);
+  }
+  //function to show map with coordinates and city name as input
   function showMap(lat, long, name) {
     //initiate map
     var map = new GMaps({
-      el: '#map',
-      zoom: 5,
-      lat: lat,
-      lng: long
-    })
+        el: '#map',
+        zoom: 10,
+        lat: lat,
+        lng: long,
+        click: function(event){
+          getWeather(event.latLng.lat(), event.latLng.lng());
+          showMap(event.latLng.lat(), event.latLng.lng(), city);
+          map.addMarker({
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng(),
+            infoWindow:{
+              content: '<h3>'+ city + '</h3>',
+              maxWidth: 300
+            }
+          });
+        }
+    });
+    mainMap = map;
     //create marker on the coordinates
     map.addMarker({
       lat: lat,
@@ -69,10 +89,10 @@ $(document).ready(function(){
       }
     });
   };
+  //function to display weather at the given coordinates
   function getWeather(lat, lng){
     //assign to api variable
     completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
-    console.log(completedAPI);
     //get JSON object from API
     jQuery.getJSON(completedAPI, function(data){
       // alert(data.coord.lat);
@@ -89,5 +109,5 @@ $(document).ready(function(){
       $("#windSpeed").html(windSpeed);
       $("#icon").html(icon);
     });
-  }
+  };
 });

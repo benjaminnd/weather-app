@@ -33,6 +33,7 @@ $container-background: rgba(66,66,66,0.4); */
   }
   .container{
     margin-top: auto;
+    width: 60%;
   }
   .btn-default {
     display: inline-block;
