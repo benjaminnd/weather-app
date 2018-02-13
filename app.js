@@ -47,8 +47,16 @@ $(document).ready(function(){
         longitude = position.coords.longitude;
         //get weather info using current coordinates
         getWeather(latitude, longitude);
+<<<<<<< HEAD
         showMap(latitude, longitude, city);
       }, error, {maximumAge:60000, timeout:500, enableHighAccuracy:true});
+=======
+        showMap(latitude, longitude, 'Current Position');
+      });
+    }else{
+      alert('Geolocation is not supported');
+
+>>>>>>> d138d6c3205895dfea71017af2c7323cc61cc6b5
     }
   };
 
@@ -109,5 +117,9 @@ $(document).ready(function(){
       $("#windSpeed").html(windSpeed);
       $("#icon").html(icon);
     });
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> d138d6c3205895dfea71017af2c7323cc61cc6b5
 });
