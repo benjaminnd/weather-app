@@ -1,5 +1,21 @@
+<<<<<<< HEAD
 var latitude;
 var longitude;
+=======
+<<<<<<< HEAD
+var latitude;
+var longitude;
+=======
+<<<<<<< HEAD
+var latitude;
+var longitude;
+=======
+<<<<<<< HEAD
+var latitude = "lat=";
+var longitude = "lon=";
+>>>>>>> 1f270e402b69406338c7f9ff128af574dc802492
+>>>>>>> 411f8d377142c16e77446918a1eb5fbef5c9ed83
+>>>>>>> 65d452eac06a16ee9cc522a1e5710de8547b9029
 var city;
 var weatherType;
 var tempC;
@@ -43,8 +59,60 @@ $(document).ready(function(){
         getWeather(latitude, longitude);
         showMap(latitude, longitude);
       });
+<<<<<<< HEAD
     }else{
       alert('Geolocation is not supported');
+=======
+<<<<<<< HEAD
+    }else{
+      alert('Geolocation is not supported');
+=======
+      //generate map
+      initMap(latitude, longitude);
+    });
+  }else{
+    alert('Geolocation is not supported');
+  }
+}
+function initMap(lat, long) {
+  var map = new GMaps({
+    el: '#map',
+    lat: lat,
+    lng: long
+  })
+}
+<<<<<<< HEAD
+=======
+=======
+var latitude = "lat=";
+var longitude = "lon=";
+var city;
+var weatherType;
+var tempC;
+var windSpeed;
+var icon;
+var tempF;
+var api = "https://fcc-weather-api.glitch.me/api/current?"
+
+$(document).ready(function(){
+  currentPositionWeather();
+  initMap();
+  console.log(map);
+  $("#temp").click(function(){
+    var unit = $("#unit").text();
+    var currentTemp = $("#temp").text();
+    console.log(currentTemp);
+    var newUnit;
+    if(unit.charCodeAt(0) == 8451){ //if current temp is in C
+      newUnit = "&#8457";
+      $("#temp").html(tempF.toFixed(2));
+      $("#unit").html(newUnit);
+    }else{ //if current temp is in F
+      newUnit = "&#8451";
+      $("#temp").html(tempC);
+      $("#unit").html(newUnit);
+>>>>>>> 411f8d377142c16e77446918a1eb5fbef5c9ed83
+>>>>>>> 65d452eac06a16ee9cc522a1e5710de8547b9029
     }
   };
   function showMap(lat, long) {
@@ -74,4 +142,21 @@ $(document).ready(function(){
       $("#icon").html(icon);
     });
   }
+<<<<<<< HEAD
 });
+=======
+<<<<<<< HEAD
+})
+=======
+}
+function initMap() {
+  var map = new GMaps({
+    el: '#map',
+    lat: 43.2557,
+    lng: -79.8711
+  })
+}
+>>>>>>> 4d246e8224f0dd7fe60ed02b7d14ea8f3cdcb37d
+>>>>>>> 1f270e402b69406338c7f9ff128af574dc802492
+>>>>>>> 411f8d377142c16e77446918a1eb5fbef5c9ed83
+>>>>>>> 65d452eac06a16ee9cc522a1e5710de8547b9029
