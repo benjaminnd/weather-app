@@ -45,6 +45,8 @@ $container-background: rgba(66,66,66,0.4); */
 
   }
   #map{
-    height: 400px;
-    width: 100%;
+    margin-left: 20%;
+    margin-top: 50px;
+    height: 450px;
+    width: 60%;
   }

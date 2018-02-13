@@ -17,6 +17,7 @@ $(document).ready(function(){
      var place = autocomplete.getPlace();
      var lat = place.geometry.location.lat();
      var lng = place.geometry.location.lng();
+     showMap(lat, lng);
      getWeather(lat, lng);
     });
   });
@@ -50,6 +51,7 @@ $(document).ready(function(){
   function showMap(lat, long) {
     var map = new GMaps({
       el: '#map',
+      zoom: 7,
       lat: lat,
       lng: long
     })
@@ -70,6 +72,7 @@ $(document).ready(function(){
       $("#city").html(city);
       $("#weatherType").html(weatherType);
       $("#temp").html(tempC);
+      $("#unit").html("&#8451");
       $("#windSpeed").html(windSpeed);
       $("#icon").html(icon);
     });
