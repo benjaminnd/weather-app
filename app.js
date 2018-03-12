@@ -47,9 +47,7 @@ $(document).ready(function(){
         longitude = position.coords.longitude;
         //get weather info using current coordinates
         getWeather(latitude, longitude);
-        showMap(latitude, longitude, city);
-      }, error, {maximumAge:60000, timeout:500, enableHighAccuracy:true});
-    }
+   }
   };
 
   //error handling function that shows default maps
