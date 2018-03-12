@@ -6,7 +6,7 @@ var tempC;
 var windSpeed;
 var icon;
 var tempF;
-var api = "http://api.openweathermap.org/data/2.5/weather?APPID=e4dab5da6349091961641db9fa1112b1&";
+var api = "https://fcc-weather-api.glitch.me/api/current?";
 var mainMap;
 
 $(document).ready(function(){
@@ -34,7 +34,7 @@ $(document).ready(function(){
     $("#unit").html(newUnit);
     //show temperature accordingly
     unit = $("#unit").text();
-    $("#temp").html((unit.charCodeAt(0)== 8451)? tempC : tempF.toFixed(1));
+    $("#temp").html((unit.charCodeAt(0)== 8451)? tempC : tempF.toFixed(2));
 
   });
   //This function uses geolocation to get user's current location's coordinates and sends request to weather API
@@ -93,14 +93,14 @@ $(document).ready(function(){
   function getWeather(lat, lng){
     //assign to api variable
     completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
-    console.log(completedAPI);
+
     //get JSON object from API
     jQuery.getJSON(completedAPI, function(data){
       // alert(data.coord.lat);
-      console.log(data);
+
       city = data.name + ", " + data.sys.country;
       weatherType = data.weather[0].description;
-      tempC = Math.round(data.main.temp - 273.15);
+      tempC = data.main.temp;
       tempF = tempC * 1.8 + 32;
       windSpeed = data.wind.speed + " km/h";
       icon ='<img src="' + data.weather[0].icon + '">';
@@ -110,7 +110,9 @@ $(document).ready(function(){
       $("#unit").html("&#8451");
       $("#windSpeed").html(windSpeed);
       $("#icon").html(icon);
-      console.log(city);
+
     });
+
   };
+
 });
