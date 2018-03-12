@@ -6,7 +6,7 @@ var tempC;
 var windSpeed;
 var icon;
 var tempF;
-var api = "https://fcc-weather-api.glitch.me/api/current?";
+var api = "http://api.openweathermap.org/data/2.5/weather?APPID=e4dab5da6349091961641db9fa1112b1&";
 var mainMap;
 
 $(document).ready(function(){
@@ -19,7 +19,6 @@ $(document).ready(function(){
      console.log(JSON.stringify(place));
      var lat = place.geometry.location.lat();
      var lng = place.geometry.location.lng();
-     showMap(lat, lng, place.formatted_address);
      getWeather(lat, lng);
     });
   });
@@ -34,7 +33,7 @@ $(document).ready(function(){
     $("#unit").html(newUnit);
     //show temperature accordingly
     unit = $("#unit").text();
-    $("#temp").html((unit.charCodeAt(0)== 8451)? tempC : tempF.toFixed(2));
+    $("#temp").html((unit.charCodeAt(0)== 8451)? tempC : tempF.toFixed(1));
 
   });
   //This function uses geolocation to get user's current location's coordinates and sends request to weather API
@@ -45,9 +44,10 @@ $(document).ready(function(){
         console.log(position);
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-        //get weather info using current coordinates
-        getWeather(latitude, longitude);
-   }
+        //get weather info using current coordinates and show Map
+        getWeather(latitude,longitude);
+      },error,{enableHighAccuracy: true,timeout: 5000,maximumAge: 0});
+    }
   };
 
   //error handling function that shows default maps
@@ -90,15 +90,14 @@ $(document).ready(function(){
   //function to display weather at the given coordinates
   function getWeather(lat, lng){
     //assign to api variable
-    completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
 
+    completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
     //get JSON object from API
     jQuery.getJSON(completedAPI, function(data){
-      // alert(data.coord.lat);
-
+      // alert(data.coord.lat)
       city = data.name + ", " + data.sys.country;
       weatherType = data.weather[0].description;
-      tempC = data.main.temp;
+      tempC = Math.round(data.main.temp);
       tempF = tempC * 1.8 + 32;
       windSpeed = data.wind.speed + " km/h";
       icon ='<img src="' + data.weather[0].icon + '">';
@@ -108,7 +107,8 @@ $(document).ready(function(){
       $("#unit").html("&#8451");
       $("#windSpeed").html(windSpeed);
       $("#icon").html(icon);
-
+      console.log(city);
+      showMap(lat,lng,city);
     });
 
   };
