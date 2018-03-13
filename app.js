@@ -12,10 +12,6 @@ var api = "http://api.openweathermap.org/data/2.5/weather?APPID=e4dab5da63490919
 var mainMap;
 
 $(document).ready(function(){
-  var hideArray = document.getElementsByClassName('hide');
-  for(var i = 0; i < hideArray.length; i++){
-    hideArray[i].style.display = "none";
-  }
   currentPositionWeather();  //call currentPositionWeather to show weather in current location
   //Convert temperature from Celcius to Fahrenheit and vice versa when users click on the button
   $("#cityinput").keyup(function(){
@@ -26,7 +22,7 @@ $(document).ready(function(){
      var lat = place.geometry.location.lat();
      var lng = place.geometry.location.lng();
      getWeather2(lat, lng);
-     showItems();
+
     });
   });
 
@@ -154,12 +150,13 @@ $(document).ready(function(){
       showMap(lat,lng,city);
       showItems();
     });
-  }
+  };
 
   function showItems(){
-    var array = document.getElementsByClassName('hide');
+    var array = document.getElementsByClassName('toggle');
+    console.log(array.length);
     for(var i = 0; i < array.length; i++){
-      array[i].style.display = "inline-block";
+      array[i].classList.remove("hide");
       console.log(array.length);
     }
   };
