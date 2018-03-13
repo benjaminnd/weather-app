@@ -18,6 +18,7 @@ $container-background: rgba(66,66,66,0.4); */
   }
   .left, .right {
     width: 30%;
+    padding-left: 5%;
   }
   .navbar {
     width: 40%;
@@ -50,4 +51,16 @@ $container-background: rgba(66,66,66,0.4); */
     margin-top: 50px;
     height: 450px;
     width: 60%;
+  }
+  .city{
+    text-align: center;
+  }
+  .weather{
+    margin-left: 5%;
+  }
+  .row{
+    text-align: center;
+  }
+  .col-xs-3{
+    padding:none;
   }

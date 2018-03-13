@@ -3,13 +3,16 @@ var longitude;
 var city;
 var weatherType;
 var tempC;
+var tempC2;
 var windSpeed;
 var icon;
 var tempF;
+var tempF2;
 var api = "http://api.openweathermap.org/data/2.5/weather?APPID=e4dab5da6349091961641db9fa1112b1&";
 var mainMap;
 
 $(document).ready(function(){
+  $(".hide").hide();
   currentPositionWeather();  //call currentPositionWeather to show weather in current location
   //Convert temperature from Celcius to Fahrenheit and vice versa when users click on the button
   $("#cityinput").keyup(function(){
@@ -19,22 +22,35 @@ $(document).ready(function(){
      console.log(JSON.stringify(place));
      var lat = place.geometry.location.lat();
      var lng = place.geometry.location.lng();
-     getWeather(lat, lng);
+     getWeather2(lat, lng);
+     $(".hide").show();
     });
   });
 
   //Click event handler for temperature button to convert celcius to fahrenheit and vice versa
-  $("#temp").click(function(){
-    var unit = $("#unit").text(); //get temporary unit
-    var currentTemp = $("#temp").text(); //get current temperature
+  $("#temp2").click(function(){
+    var unit2 = $("#unit2").text(); //get temporary unit
+    // var currentTemp = $("#temp1").text(); //get current temperature
+    //If current unit is Celcius change new unit to F and vice versa
+    var newUnit = (unit2.charCodeAt(0)== 8451)? "&#8457" : "&#8451";
+    console.log(newUnit);
+    $("#unit2").html(newUnit);
+    //show temperature accordingly
+    unit = $("#unit2").text();
+    $("#temp2").html((unit.charCodeAt(0)== 8451)? tempC2 : tempF2.toFixed(1));
+  });
+
+  $("#temp1").click(function(){
+    var unit = $("#unit1").text(); //get temporary unit
+    // var currentTemp = $("#temp1").text(); //get current temperature
     //If current unit is Celcius change new unit to F and vice versa
     var newUnit = (unit.charCodeAt(0)== 8451)? "&#8457" : "&#8451";
     console.log(newUnit);
-    $("#unit").html(newUnit);
+    $("#unit1").html(newUnit);
     //show temperature accordingly
-    unit = $("#unit").text();
-    $("#temp").html((unit.charCodeAt(0)== 8451)? tempC : tempF.toFixed(1));
-
+    unit = $("#unit1").text();
+    $("#temp1").html((unit.charCodeAt(0)== 8451)? tempC : tempF.toFixed(1));
+    console.log(tempF.toFixed(1));
   });
   //This function uses geolocation to get user's current location's coordinates and sends request to weather API
   function currentPositionWeather(){
@@ -45,7 +61,7 @@ $(document).ready(function(){
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
         //get weather info using current coordinates and show Map
-        getWeather(latitude,longitude);
+        getWeather1(latitude,longitude);
       },error,{enableHighAccuracy: true,timeout: 5000,maximumAge: 0});
     }
   };
@@ -64,7 +80,7 @@ $(document).ready(function(){
         lat: lat,
         lng: long,
         click: function(event){
-          getWeather(event.latLng.lat(), event.latLng.lng());
+          getWeather2(event.latLng.lat(), event.latLng.lng());
           showMap(event.latLng.lat(), event.latLng.lng(), city);
           map.addMarker({
             lat: event.latLng.lat(),
@@ -88,29 +104,56 @@ $(document).ready(function(){
     });
   };
   //function to display weather at the given coordinates
-  function getWeather(lat, lng){
+  function getWeather1(lat, lng){
     //assign to api variable
 
     completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
     //get JSON object from API
     jQuery.getJSON(completedAPI, function(data){
       // alert(data.coord.lat)
+      var iconURL = 'http://openweathermap.org/img/w/';
       city = data.name + ", " + data.sys.country;
       weatherType = data.weather[0].description;
-      tempC = Math.round(data.main.temp);
+      tempC = Math.round(data.main.temp - 273.15);
       tempF = tempC * 1.8 + 32;
       windSpeed = data.wind.speed + " km/h";
-      icon ='<img src="' + data.weather[0].icon + '">';
-      $("#city").html(city);
-      $("#weatherType").html(weatherType);
-      $("#temp").html(tempC);
-      $("#unit").html("&#8451");
-      $("#windSpeed").html(windSpeed);
-      $("#icon").html(icon);
+      icon ='<img src="' + iconURL + data.weather[0].icon + '.png" alt="icon">';
+      $("#city1").html(city);
+      $("#weatherType1").html(weatherType);
+      $("#temp1").html(tempC);
+      $("#unit1").html("&#8451");
+      $("#windSpeed1").html(windSpeed);
+      $("#icon1").html(icon);
       console.log(city);
       showMap(lat,lng,city);
     });
 
   };
+  function getWeather2(lat,lng){
+    completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
+    //get JSON object from API
+    jQuery.getJSON(completedAPI, function(data){
+      // alert(data.coord.lat)
+      var iconURL = 'http://openweathermap.org/img/w/';
+      city = data.name + ", " + data.sys.country;
+      weatherType = data.weather[0].description;
+      tempC2 = Math.round(data.main.temp - 273.15);
+      tempF2 = tempC2 * 1.8 + 32;
+      windSpeed = data.wind.speed + " km/h";
+      icon ='<img src="' + iconURL + data.weather[0].icon + '.png" alt="icon">';
+      $("#city2").html(city);
+      $("#weatherType2").html(weatherType);
+      $("#temp2").html(tempC2);
+      $("#unit2").html("&#8451");
+      $("#windSpeed2").html(windSpeed);
+      $("#icon2").html(icon);
+      console.log(city);
+      showMap(lat,lng,city);
+      $(".hide").show();
+    });
+  }
+  function show(){
+    
+  }
 
 });
