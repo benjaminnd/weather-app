@@ -8,8 +8,10 @@ var windSpeed;
 var icon;
 var tempF;
 var tempF2;
+var cors ="https://cors-anywhere.herokuapp.com/";
 var api = "http://api.openweathermap.org/data/2.5/weather?APPID=e4dab5da6349091961641db9fa1112b1&";
 var mainMap;
+var zoomLevel;
 
 $(document).ready(function(){
   currentPositionWeather();  //call currentPositionWeather to show weather in current location
@@ -71,16 +73,16 @@ $(document).ready(function(){
     getWeather(43.2326349, -79.8813217);
   }
   //function to show map with coordinates and city name as input
-  function showMap(lat, long, name) {
+  function showMap(lat, long, name, zoom, temp) {
     //initiate map
+    console.log(zoom);
     var map = new GMaps({
         el: '#map',
-        zoom: 10,
+        zoom: zoom,
         lat: lat,
         lng: long,
         click: function(event){
           getWeather2(event.latLng.lat(), event.latLng.lng());
-          showMap(event.latLng.lat(), event.latLng.lng(), city);
           map.addMarker({
             lat: event.latLng.lat(),
             lng: event.latLng.lng(),
@@ -89,7 +91,13 @@ $(document).ready(function(){
               maxWidth: 300
             }
           });
+        },
+        zoom_changed: function(){
+          console.log(map.getZoom());
+          zoomLevel = map.getZoom();
         }
+
+
     });
     mainMap = map;
     //create marker on the coordinates
@@ -97,7 +105,7 @@ $(document).ready(function(){
       lat: lat,
       lng: long,
       infoWindow:{
-        content: '<h3>'+ name + '</h3>',
+        content: '<h3>'+ name + '</h3><p>' + icon + '          ' + temp + '&#8451</p>',
         maxWidth: 300
       }
     });
@@ -106,7 +114,7 @@ $(document).ready(function(){
   function getWeather1(lat, lng){
     //assign to api variable
 
-    completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
+    completedAPI =  cors + api + 'lat=' + lat + '&' + 'lon=' + lng;
     //get JSON object from API
     jQuery.getJSON(completedAPI, function(data){
       // alert(data.coord.lat)
@@ -124,12 +132,12 @@ $(document).ready(function(){
       $("#windSpeed1").html(windSpeed);
       $("#icon1").html(icon);
       console.log(city);
-      showMap(lat,lng,city);
+      showMap(lat,lng,city,10, tempC);
     });
 
   };
   function getWeather2(lat,lng){
-    completedAPI =  api + 'lat=' + lat + '&' + 'lon=' + lng;
+    completedAPI =  cors + api + 'lat=' + lat + '&' + 'lon=' + lng;
     //get JSON object from API
     jQuery.getJSON(completedAPI, function(data){
       // alert(data.coord.lat)
@@ -147,7 +155,7 @@ $(document).ready(function(){
       $("#windSpeed2").html(windSpeed);
       $("#icon2").html(icon);
       console.log(city);
-      showMap(lat,lng,city);
+      showMap(lat,lng,city,zoomLevel, tempC2);
       showItems();
     });
   };

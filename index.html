@@ -20,37 +20,42 @@
       <div class="navbar"></div>
       <div class="right">Built by Minh Dang <i class="fa fa-heart"></i></div>
     </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="jumbotron">
-          <h2 id="city1" class="city">Hello World</h2>
-          <div class="weather row row-eq-height">
-            <div class="col-xs-3"><span id="icon1">weather icon</span><button id="weatherType1" type="button" class="btn-default nonclick"></button></div>
-            <div class="col-xs-3"><button id="temp1" type="button" class="btn-default"></button><span id="unit1">&#8451;</span></div>
-            <div class="col-xs-3"><i class="wi wi">Wind: </i><button id="windSpeed1" type="button" class="btn-default nonclick"></button></div>
+    <div class="container-fluid">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="jumbotron">
+              <h2 id="city1" class="city">Hello World</h2>
+              <div class="weather row row-eq-height">
+                <div class="col-xs-5"><span id="icon1">weather icon</span><button id="weatherType1" type="button" class="btn-default nonclick"></button></div>
+                <div class="col-xs-3"><button id="temp1" type="button" class="btn-default"></button><span id="unit1">&#8451;</span></div>
+                <div class="col-xs-4"><i class="wi wi">Wind: </i><button id="windSpeed1" type="button" class="btn-default nonclick"></button></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <form class="form-inline">
+              <label for="cityinput">Enter another city</label>
+              <input type="text" class="form-control" id="cityinput"/>
+            </form>
+          </div>
+          <div id="comparedCity" class="row">
+            <div class="jumbotron">
+              <h2 id="city2" class="city">Enter city name or click on the map</h2>
+              <div class="weather row row-eq-height">
+                <div class="col-xs-5 toggle hide"><span id="icon2">weather icon</span><button id="weatherType2" type="button" class="btn-default nonclick"></button></div>
+                <div class="col-xs-3 toggle hide"><button id="temp2" type="button" class="btn-default"></button><span id="unit2">&#8451;</span></div>
+                <div class="col-xs-4 toggle hide"><i class="wi wi">Wind: </i><button id="windSpeed2" type="button" class="btn-default nonclick"></button></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div id="comparedCity" class="col-sm-6">
-        <div class="jumbotron">
-          <h2 id="city2" class="city">Enter city name or click on the map</h2>
-          <div class="weather row row-eq-height">
-            <div class="col-xs-3 toggle hide"><span id="icon2">weather icon</span><button id="weatherType2" type="button" class="btn-default nonclick"></button></div>
-            <div class="col-xs-3 toggle hide"><button id="temp2" type="button" class="btn-default"></button><span id="unit2">&#8451;</span></div>
-            <div class="col-xs-3 toggle hide"><i class="wi wi">Wind: </i><button id="windSpeed2" type="button" class="btn-default nonclick"></button></div>
+        <div class="col-sm-6">
+          <div class="row">
+              <div id="map">
+              </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="container">
-      <div id="form">
-        <label for="cityinput">Enter another city</label>
-        <input type="text" class="form-control" id="cityinput"/>
-      </div>
-    </div>
-    <div class="row">
-        <div id="map">
-        </div>
+
     </div>
   </body>
 </html>

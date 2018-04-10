@@ -32,9 +32,9 @@ $container-background: rgba(66,66,66,0.4); */
     vertical-align: bottom;
     line-height: 80px;
   }
-  .container{
+  .container-fluid{
     margin-top: auto;
-    width: 60%;
+    width: 100%;
   }
   .btn-default {
     display: inline-block;
@@ -46,9 +46,13 @@ $container-background: rgba(66,66,66,0.4); */
     background-color: #eee;
 
   }
+  .form-inline{
+    float: left;
+    margin-bottom: 15px;
+  }
   #map{
-    margin-top: 50px;
-    height: 450px;
+    margin-left: 10px;
+    height: 570px;
     width: 100%;
   }
   .city{
@@ -56,10 +60,67 @@ $container-background: rgba(66,66,66,0.4); */
   }
   .weather{
     margin-left: 5%;
+    margin-top: 5%;
   }
   .row{
     text-align: center;
+    margin-bottom: 20px;
   }
   .col-xs-3{
     padding:none;
+  }
+  .city{
+    margin-top: 0px;
+  }
+  .form-inline .form-control{
+    width: 500px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    #header{
+      height:80px;
+      margin: 0px;
+      padding: 0px;
+    }
+    .navbar{
+      display: none;
+    }
+    .right{
+      display:none;
+    }
+    .left{
+      width: 100%;
+    }
+    .weather{
+      margin-left:0px;
+      margin-top: 0px;
+    }
+    .city{
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .row{
+      text-align: center;
+      margin-bottom: 0;
+      padding: 0px;
+    }
+    label {
+      display: none;
+    }
+    .form-inline .form-control{
+      width: 250px;
+    }
+    .container-fluid{
+      margin: 0px;
+    }
+    .col-sm-6{
+      height: 40%;
+      padding: 0 0 0 0;
+    }
+    .jumbotron{
+      height: 40%;
+    }
+    #map{
+      height: 250px;
+    }
   }
